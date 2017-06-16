@@ -1,0 +1,13 @@
+FROM drupaldocker/php:7-cli
+
+ARG USER_UID=1000
+
+# Install needed CLI tools (for Drush, MySQL and Solr)
+RUN mkdir -p /etc/drush \
+  && echo "<?php \$options['root'] = '/var/www/html/web';" > /etc/drush/drushrc.php
+
+RUN useradd --uid ${USER_UID} --create-home php
+
+CMD ["bash"]
+
+USER ${USER_UID}
