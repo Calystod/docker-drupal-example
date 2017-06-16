@@ -50,5 +50,14 @@ The database informations are:
 * Database password=drupal
 * Host=db (it's the name of the container which run MariaDB)
 
+Other informations:
+
+In the file .env, the USER_UID must match with the USER_UID of your personnal user to have the same right.
+
+Verify your user id with the command:
+`id -u`
+
+and change the data in the .env if necessary. You can used an utility like [direnv](https://direnv.net/) or a global variable.
+
 and enjoy !
 
