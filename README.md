@@ -15,11 +15,6 @@ Before to launch the project for the first time, you need install some composant
 First launch
 ------------
 
-Welcome in the docker test project. To launch the project for the first time, open your favorite terminal command line and go to the root of this project.
-(It is possible to have docker on ConEmu by pressing the dropdown arrow next to the green "+" on the top right, and selecting tools>docker)
-
-Launch:
-
 To up your containers, launch:
 
 ```docker-compose up```
