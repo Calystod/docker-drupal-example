@@ -65,9 +65,9 @@ Many things will be install:
 * Drupal core
 * Drush
 
-You can go on your browser and go to http://127.0.0.1/
+You can go on your browser and go to [http://172.20.0.5/](http://172.20.0.5/)
 
-> Warning: This is true on Linux, not on Windows Home where you must connect to the IP of the VirtualBox machine which run. It is to see on Mac OS and Windows Pro.
+> Warning: I only test it on Linux, not on other environments.
 
 Install your new website.
 
@@ -77,6 +77,8 @@ The database informations are:
 * Database user=drupal
 * Database password=drupal
 * Host=db (it's the name of the container which run MariaDB)
+
+You can go on phpMyAdmin with [http://172.20.0.3/](http://172.20.0.3/)
 
 Other informations:
 

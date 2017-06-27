@@ -1,26 +1,71 @@
 version: '2'
 
+# We define volumes here.
+# In this case, we define a volume for the database but it's overkill
+# because we used this volume only with one container.
 volumes:
   db-volume:
 
+# We defined networks here.
+# It's an example to present how it works but it's not recommanded to use that
+# for development on localhost.
+networks:
+
+  stack_net:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.20.0.0/16
+         gateway: 172.20.0.1
+
+# We define containers here
 services:
 
   # DB container
   db:
+    # We use the image of mariadb (https://hub.docker.com/_/mariadb/).
+    # Like we don't precise tag, it's the latest version image which is download.
     image: mariadb
+    # We define environment variable like explained in the documentation of the image.
     environment:
       - MYSQL_ROOT_PASSWORD=root_password
       - MYSQL_DATABASE=${DATABASE_NAME}
       - MYSQL_USER=drupal
       - MYSQL_PASSWORD=drupal
+    # We used the volume previously defined.
     volumes:
       - db-volume:/var/lib/mysql
+    # We define a static IP for the container based on the network previously defined.
+    networks:
+      stack_net:
+        ipv4_address: 172.20.0.2
 
-  # Container to run cli applications (composer, drush, etc.)
+  # Container for PhpMyAdmin
+  php-my-admin:
+    # We use the image of phpmyadmin version 4.7.
+    image: phpmyadmin/phpmyadmin:4.7
+    # We redefine environment variable for the communication with the db container.
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_USER=drupal
+      - MYSQL_PASSWORD=drupal
+    # We define a static IP for the container based on the network previously defined.
+    networks:
+      stack_net:
+        ipv4_address: 172.20.0.3
+    # We indicate this container is dependant of the db container and can communicate with it.
+    depends_on:
+      - db
+
+  # Container to run cli applications (composer, drush, drupal-console, etc.)
   php-cli:
+    # Here, we use a Dockerfile and not a Docker Image. The file is Dockerfile-php-cli and is in the same repository
+    # than the docker-compose.yml
     build:
       context: .
       dockerfile: Dockerfile-php-cli
+      # Arguments pass to the Dockerfile.
       args:
         USER_UID: ${USER_UID}
     volumes:
@@ -32,14 +77,20 @@ services:
       - ~/.npm:/home/php/.npm:rw
       # Share the local user's SSH keys and configuration (read-only)
       - ~/.ssh:/home/php/.ssh:ro
+      # Share the local user's known_host
       - ~/.ssh/known_hosts:/home/php/.ssh/known_hosts:rw
+      # Share the local user's gitconfig
       - ~/.gitconfig:/home/php/.gitconfig
     environment:
+      # We define the PATH and add the bin directory of vendor.
       - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/www/html/vendor/bin
       - MYSQL_DATABASE=${DATABASE_NAME}
       - MYSQL_USER=drupal
       - MYSQL_PASSWORD=drupal
-    links:
+    networks:
+      stack_net:
+        ipv4_address: 172.20.0.6
+    depends_on:
       - db
 
   # php-fpm container used as PHP runtime for the web server
@@ -51,17 +102,28 @@ services:
       - MYSQL_DATABASE=${DATABASE_NAME}
       - MYSQL_USER=drupal
       - MYSQL_PASSWORD=drupal
-    links:
+    networks:
+      stack_net:
+        ipv4_address: 172.20.0.4
+    depends_on:
       - db
 
   # The web server used to access the developement website
   web:
     image: drupaldocker/nginx
+    # We define the root directory for NGinx. Web Directory is the root of Drupal after download with composer.
     environment:
       DOCROOT: /var/www/html/web
+    # We define port. The variable PORT is defined in the .env file.
     ports:
       - ${PORT}:80
+    networks:
+      stack_net:
+        ipv4_address: 172.20.0.5
     volumes:
       - .:/var/www/html:rw
+    depends_on:
+      - php-fpm
+    # We create a link with the php service of php-fpm.
     links:
       - php-fpm:php
