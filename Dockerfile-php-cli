@@ -1,13 +1,18 @@
+# The docker file is based on the image https://hub.docker.com/r/drupaldocker/php/ with php 7.
 FROM drupaldocker/php:7-cli
 
+# We define the USER_UID by default
 ARG USER_UID=1000
 
-# Install needed CLI tools (for Drush, MySQL and Solr)
+# Define the root directory for the project to drush.
 RUN mkdir -p /etc/drush \
   && echo "<?php \$options['root'] = '/var/www/html/web';" > /etc/drush/drushrc.php
 
+# Create a user `php` in the container with the same UID than your computer user
 RUN useradd --uid ${USER_UID} --create-home php
 
+# We indicate the command by default when we run the container without command is bash
 CMD ["bash"]
 
+# We indicate the default user when we run the container has the uid previously defined (so, it's the php user).
 USER ${USER_UID}
