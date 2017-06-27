@@ -97,4 +97,4 @@ Documentation
 * [What is Docker?](https://www.docker.com/what-docker)
 * [Docker Documentation](https://docs.docker.com/)
 * [Docker Compose V2 - File references](https://docs.docker.com/compose/compose-file/compose-file-v2/)
-* [PHP Image of Docker](https://hub.docker.com/_/php/) -> Important to understand how to active php extensions in containers.
+* [PHP Image of Docker](https://hub.docker.com/_/php/) -> Important to understand how to active php extensions in containers and other things. DrupalDocker PHP image is based on it.
