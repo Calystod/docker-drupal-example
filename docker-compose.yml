@@ -1,4 +1,4 @@
-version: '2'
+version: '3.3'
 
 # We define volumes here.
 # In this case, we define a volume for the database but it's overkill
