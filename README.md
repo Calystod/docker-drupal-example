@@ -32,7 +32,7 @@ For Mac OS:
 For Windows:
 * [Installation page](https://docs.docker.com/docker-for-windows/install/#download-docker-for-windows)
 
-> **Important**: Docker on Linux doesn't work exactly the same way it does on Mac OS and Windows. On these two last
+> **Important**: Docker on Linux doesn't work exactly the same way it does on Mac OS and Windows. On these last two
 > environments, Docker works with the Docker Toolbox. It's an application which contains all elements necessary for Docker
 > together with the Docker Machine and some experimental features enabled by default.
 >
