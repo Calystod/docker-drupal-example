@@ -4,14 +4,14 @@ This is a project example to launch Drupal 8 with Docker
 First information
 -----------------
 
-This project has for goal to present simply how to create a docker environment to people who have never worked with
-Docker. This project focuses on Drupal specifically but can be adapted to work with other technologies.
+This project's goal is to present simply how to create a docker environment for people who have never worked with
+Docker before. This project focuses on Drupal specifically but can be adapted to work with other technologies.
 
-You can find documentation links and commentaries. If you want to improve or correct errors, you can fork this project and do
+You can find documentation links and commentaries below. If you want to improve or correct errors, you can fork this project and do
 a pull request.
 
-To know how to assign a static IP to containers, you can checkout the branch docker-networks. But this branch is in
-work in progress and this approach isn't recommand except if we want access to container on external networks.
+To know how to assign a static IP to containers, you can checkout the docker-networks branch. But this branch is still 
+work in progress and this approach isn't recommanded except if we want access to container on external networks.
 
 Prerequires
 -----------
