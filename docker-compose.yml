@@ -74,7 +74,7 @@ services:
 
   # php-fpm container used as PHP runtime for the web server
   php-fpm:
-    image: drupaldocker/php-dev:7.0-fpm
+    image: drupaldocker/php-dev:${PHP_VERSION_TAG}-fpm
     volumes:
       - .:/var/www/html:rw
     environment:
