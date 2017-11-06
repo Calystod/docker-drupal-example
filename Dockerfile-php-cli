@@ -1,5 +1,5 @@
 # The docker file is based on the image https://hub.docker.com/r/drupaldocker/php/ with php 7.
-FROM drupaldocker/php:7-cli
+FROM drupaldocker/php:${PHP_VERSION_TAG}-cli
 
 # We define the USER_UID by default
 ARG USER_UID=1000

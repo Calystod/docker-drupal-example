@@ -12,7 +12,7 @@ services:
   # DB container
   db:
     # We use the image of mariadb (https://hub.docker.com/_/mariadb/).
-    # Like we don't precise tag, it's the latest version image which is download.
+    # Because we don't specify a tag, it's the latest version image which is downloaded.
     image: mariadb
     # We define environment variable like explained in the documentation of the image.
     environment:
@@ -43,11 +43,11 @@ services:
   # Container to run cli applications (composer, drush, drupal-console, etc.)
   php-cli:
     # Here, we use a Dockerfile and not a Docker Image. The file is Dockerfile-php-cli and is in the same repository
-    # than the docker-compose.yml
+    # as the docker-compose.yml
     build:
       context: .
       dockerfile: Dockerfile-php-cli
-      # Arguments pass to the Dockerfile.
+      # Arguments passed to the Dockerfile.
       args:
         USER_UID: ${USER_UID}
     volumes:
@@ -74,7 +74,7 @@ services:
 
   # php-fpm container used as PHP runtime for the web server
   php-fpm:
-    image: drupaldocker/php-dev:7.0-fpm
+    image: drupaldocker/php-dev:${PHP_VERSION_TAG}-fpm
     volumes:
       - .:/var/www/html:rw
     environment:
